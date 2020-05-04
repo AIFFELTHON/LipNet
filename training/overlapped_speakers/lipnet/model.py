@@ -7,6 +7,7 @@ from tensorflow.keras.layers import Input
 from tensorflow.keras.models import Model
 from lipnet.core.layers import CTC
 from tensorflow.compat.v1.keras import backend as K
+import tensorflow as tf
 
 
 class LipNet(object):
