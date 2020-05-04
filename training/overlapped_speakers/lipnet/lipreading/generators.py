@@ -175,7 +175,6 @@ class BasicGenerator(keras.callbacks.Callback):
 
         return (inputs, outputs)
 
-    @threadsafe_generator
     def next_train(self):
         r = np.random.RandomState(self.random_seed)
         while 1:
