@@ -3,7 +3,7 @@ from lipnet.lipreading.videos import Video
 from lipnet.lipreading.aligns import Align
 from lipnet.helpers.threadsafe import threadsafe_generator
 from lipnet.helpers.list import get_list_safe
-from tensorflow.keras import backend as K
+from tensorflow.compat.v1.keras import backend as K
 import numpy as np
 from tensorflow import keras
 import pickle
@@ -175,7 +175,6 @@ class BasicGenerator(keras.callbacks.Callback):
 
         return (inputs, outputs)
 
-    @threadsafe_generator
     def next_train(self):
         r = np.random.RandomState(self.random_seed)
         while 1:
@@ -212,7 +211,7 @@ class BasicGenerator(keras.callbacks.Callback):
             #     print "-------------------"
             yield ret
 
-    @threadsafe_generator
+
     def next_val(self):
         while 1:
             with self.cur_val_index.get_lock():

@@ -6,11 +6,14 @@ from tensorflow.keras.layers import LSTM
 from tensorflow.keras.layers import Input
 from tensorflow.keras.models import Model
 from lipnet.core.layers import CTC
-from tensorflow.keras import backend as K
+from tensorflow.compat.v1.keras import backend as K
+import tensorflow as tf
 
 
 class LipNet(object):
     def __init__(self, img_c=3, img_w=100, img_h=50, frames_n=75, absolute_max_string_len=32, output_size=28):
+        tf.compat.v1.disable_eager_execution()
+        K.set_session
         self.img_c = img_c
         self.img_w = img_w
         self.img_h = img_h

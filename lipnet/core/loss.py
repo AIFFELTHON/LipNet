@@ -1,4 +1,4 @@
-from tensorflow.keras import backend as K
+from tensorflow.compat.v1.keras import backend as K
 
 # Actual loss calculation
 def ctc_lambda_func(args):
@@ -8,4 +8,5 @@ def ctc_lambda_func(args):
     # tend to be garbage:
     # y_pred = y_pred[:, 2:, :]
     y_pred = y_pred[:, :, :]
+    K.set_session
     return K.ctc_batch_cost(labels, y_pred, input_length, label_length)
