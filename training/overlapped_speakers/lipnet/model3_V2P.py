@@ -31,34 +31,35 @@ class LipNet(object):
 
         self.input_data = Input(name='the_input', shape=input_shape, dtype='float32')
 
-        self.zero1 = ZeroPadding3D(padding=(1, 0, 0), name='zero1')(self.input_data)
+        self.zero1 = ZeroPadding3D(padding=(1, 2, 2), name='zero1')(self.input_data)
         self.conv1 = Conv3D(64, (3, 3, 3), strides=(1, 2, 2), kernel_initializer='he_normal', name='conv1')(self.zero1)
         self.gn1 = GroupNormalization(name='gn1', groups=32)(self.conv1)
         self.actv1 = Activation('relu', name='actv1')(self.gn1)
         self.maxp1 = MaxPooling3D(pool_size=(1, 2, 2), strides=(1, 2, 2), name='max1')(self.actv1)
 
-        self.zero2 = ZeroPadding3D(padding=(1, 0, 0), name='zero2')(self.maxp1)
+        self.zero2 = ZeroPadding3D(padding=(1, 2, 2), name='zero2')(self.maxp1)
         self.conv2 = Conv3D(128, (3, 3, 3), strides=(1, 1, 1), kernel_initializer='he_normal', name='conv2')(self.zero2)
         self.gn2 = GroupNormalization(name='gn2', groups=32)(self.conv2)
         self.actv2 = Activation('relu', name='actv2')(self.gn2)
         self.maxp2 = MaxPooling3D(pool_size=(1, 2, 2), strides=(1, 2, 2), name='max2')(self.actv2)
 
-        self.zero3 = ZeroPadding3D(padding=(1, 0, 0), name='zero3')(self.maxp2)
+        self.zero3 = ZeroPadding3D(padding=(1, 1, 1), name='zero3')(self.maxp2)
         self.conv3 = Conv3D(256, (3, 3, 3), strides=(1, 1, 1), kernel_initializer='he_normal', name='conv3')(self.zero3)
         self.gn3 = GroupNormalization(name='gn3', groups=32)(self.conv3)
         self.actv3 = Activation('relu', name='actv3')(self.gn3)
         self.maxp3 = MaxPooling3D(pool_size=(1, 2, 2), strides=(1, 2, 2), name='max3')(self.actv3)
 
-        self.zero4 = ZeroPadding3D(padding=(1, 0, 0), name='zero4')(self.maxp3)
+        self.zero4 = ZeroPadding3D(padding=(1, 1, 1), name='zero4')(self.maxp3)
         self.conv4 = Conv3D(512, (3, 3, 3), strides=(1, 1, 1), kernel_initializer='he_normal', name='conv4')(self.zero4)
         self.gn4 = GroupNormalization(name='gn4', groups=32)(self.conv4)
         self.actv4 = Activation('relu', name='actv4')(self.gn4)
+        self.maxp4 = MaxPooling3D(pool_size=(1, 2, 2), strides=(1, 2, 2), name='max4')(self.actv4)
 
-        self.zero5 = ZeroPadding3D(padding=(1, 0, 0), name='zero5')(self.actv4)
+        self.zero5 = ZeroPadding3D(padding=(1, 1, 1), name='zero5')(self.maxp4)
         self.conv5 = Conv3D(512, (3, 3, 3), strides=(1, 1, 1), kernel_initializer='he_normal', name='conv5')(self.zero5)
         self.gn5 = GroupNormalization(name='gn5', groups=32)(self.conv5)
         self.actv5 = Activation('relu', name='actv5')(self.gn5)
-        self.maxp5 = MaxPooling3D(pool_size=(1, 2, 2), strides=(1, 1, 1), name='max5')(self.actv5)
+        self.maxp5 = MaxPooling3D(pool_size=(1, 2, 2), strides=(1, 2, 2), name='max5')(self.actv5)
 
         self.resh1 = TimeDistributed(Flatten())(self.maxp5)
 
