@@ -31,14 +31,14 @@ class LipNet(object):
         self.input_data = Input(name='the_input', shape=input_shape, dtype='float32')
 
         self.zero1 = ZeroPadding3D(padding=(1, 2, 2), name='zero1')(self.input_data)
-        self.conv1 = Conv3D(32, (3, 5, 5), strides=(1, 2, 2), kernel_initializer='he_normal', name='conv1')(self.zero1)
+        self.conv1 = Conv3D(32, (3, 3, 3), strides=(1, 2, 2), kernel_initializer='he_normal', name='conv1')(self.zero1)
         self.batc1 = BatchNormalization(name='batc1')(self.conv1)
         self.actv1 = Activation('relu', name='actv1')(self.batc1)
         self.drop1 = SpatialDropout3D(0.5)(self.actv1)
         self.maxp1 = MaxPooling3D(pool_size=(1, 2, 2), strides=(1, 2, 2), name='max1')(self.drop1)
 
         self.zero2 = ZeroPadding3D(padding=(1, 2, 2), name='zero2')(self.maxp1)
-        self.conv2 = Conv3D(64, (3, 5, 5), strides=(1, 1, 1), kernel_initializer='he_normal', name='conv2')(self.zero2)
+        self.conv2 = Conv3D(64, (3, 3, 3), strides=(1, 1, 1), kernel_initializer='he_normal', name='conv2')(self.zero2)
         self.batc2 = BatchNormalization(name='batc2')(self.conv2)
         self.actv2 = Activation('relu', name='actv2')(self.batc2)
         self.drop2 = SpatialDropout3D(0.5)(self.actv2)
