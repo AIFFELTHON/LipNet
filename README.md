@@ -1,6 +1,8 @@
 # LipNet: End-to-End Sentence-level Lipreading - COMP 562 - Alexei Kouminov Version
 Meant for use on Tensorflow-GPU 2.1.0 in GCP
 
+*NOTE: models 3 and 4 had weights that were too big for Github and therefore they are in the drive folder that I attached to the paper
+
 Specs of use
 
 Debian Deep Learning on Linux
