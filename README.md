@@ -1,4 +1,52 @@
-# LipNet: End-to-End Sentence-level Lipreading
+# LipNet: End-to-End Sentence-level Lipreading - COMP 562 - Alexei Kouminov Version
+Meant for use on Tensorflow-GPU 2.1.0 in GCP
+
+Specs of use
+
+Debian Deep Learning on Linux
+Includes a V2P model (model 3)
+
+used with Grid Corpus
+
+For data manipulation use some of these common commands:
+
+# unzip a file
+sudo unzip align.zip -d align_full
+
+# un tar a file
+sudo tar -xvf s32.tar 
+
+# for me this was useful because I used thes commands for quick alignment preperation
+# There were too many of them to the rename operation so I had to do them all in their own respective s* directories
+for i in {1..34}; do sudo mkdir s$i;sudo mv s$i.tar s$i/s$i.tar; cd s$i;  sudo tar -xvf s$i.tar;cd ..;done
+
+# I had to rename them because my files were split up between regular .mp4 files and a *_mouth.mp4 version, it was easer to rename the aligns than the videos
+for i in {1..34}; do cd s$i/align;sudo rename 's/\.align/\_mouth.align/' *;cd ../..; done
+
+sudo mkdir align
+# putting them all into one directory
+for i in {1..34}; do sudo cp s$i/align/* align; done
+
+# removing non homogenous videos, some more work can be done here as I still get errors when training
+for i in {25..30};do sudo rm -rf s$i; done
+for i in {3..5};do sudo rm -rf s$i; done
+for i in {12..15};do sudo rm -rf s$i; done
+
+# do this before training, it just creates a bunch of symbolic links that it needs to start training
+python prepare.py ~/video/video/video/ ~/align_full/align/ 1000
+
+# when in training directory under a specific scenario you can use this to train
+# note you have to move lipnet directory inside of it otherwise it cannot find it
+python train.py s1
+
+# dependency of model4 only
+pip install  --no-deps tensorflow-addons==0.5.1
+
+# I created a convert mp4 to frame script as the framework plays nicer with frames
+sudo ~/LipNetEnv/bin/python2.7 convert_mp4_to_frames.py video *.mp4 video
+
+
+
 Keras implementation of the method described in the paper 'LipNet: End-to-End Sentence-level Lipreading' by Yannis M. Assael, Brendan Shillingford, Shimon Whiteson, and Nando de Freitas (https://arxiv.org/abs/1611.01599).
 
 ![LipNet performing prediction (subtitle alignment only for visualization)](assets/lipreading.gif)

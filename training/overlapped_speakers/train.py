@@ -68,9 +68,9 @@ def train(run_name, speaker, start_epoch, stop_epoch, img_c, img_w, img_h, frame
                         initial_epoch=start_epoch,
                         verbose=1,
                         max_queue_size=5,
-                        workers=2,)
+                        workers=1,)
 
 if __name__ == '__main__':
     run_name = datetime.datetime.now().strftime('%Y:%m:%d:%H:%M:%S')
     speaker = sys.argv[1]
-    train(run_name, speaker, 0, 5000, 3, 100, 50, 75, 32, 50)
+    train(run_name, speaker, 0, 50, 3, 100, 50, 75, 32, 50)
